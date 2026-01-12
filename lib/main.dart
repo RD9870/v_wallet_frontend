@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:v_wallet_frontend/providers/auth_provider.dart';
+import 'package:v_wallet_frontend/screens/handeling_screens/confirmation_page.dart';
 import 'package:v_wallet_frontend/screens/handeling_screens/intro_screen.dart';
 import 'package:v_wallet_frontend/screens/handeling_screens/loading_screen.dart';
+import 'package:v_wallet_frontend/screens/handeling_screens/network_error_page.dart';
 import 'package:v_wallet_frontend/screens/main_screens/home_screen.dart';
 import 'package:toastification/toastification.dart';
 
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
       child: ToastificationWrapper(
   child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'C Cards',
         theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
         home: const ScreenRouter(),
       ),),
@@ -51,7 +52,7 @@ class _ScreenRouterState extends State<ScreenRouter> {
     return Consumer<AuthProvider>(
       builder: (context, authConsumer, _) {
         return authConsumer.status == AuthStatus.authenticated
-            ? HomeScreen()
+            ? NetworkErrorPage()//ConfirmationPage(message: "DONE",)//HomeScreen()
             : authConsumer.status == AuthStatus.unauthenticated
             ? IntroScreen()
             : authConsumer.status == AuthStatus.authenticating

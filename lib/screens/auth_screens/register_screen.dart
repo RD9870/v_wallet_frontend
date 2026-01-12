@@ -77,16 +77,19 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           MainTextField(
                             label: "Full Name",
+                            prefixIcon: Icon(Icons.person),
                             controller: authConsumer.nameController,
                             validator: authConsumer.validateName,
                           ),
                           MainTextField(
                             label: "Phone Number",
+                            prefixIcon: Icon(Icons.phone),
                             controller: authConsumer.phoneController,
                             validator: authConsumer.validatePhone,
                           ),
                           MainTextField(
                             label: "Password",
+                            prefixIcon: Icon(Icons.lock),
                             controller: authConsumer.passwordController,
                             validator: authConsumer.validatePassword,
                             hidePassword: authConsumer.hidePassword,
@@ -94,6 +97,7 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           MainTextField(
                             label: "Confirm Password",
+                            prefixIcon: Icon(Icons.lock),
                             controller: authConsumer.confirmPasswordController,
                             validator: authConsumer.validateConfirmPassword,
                             hidePassword: authConsumer.hideConfirmPassword,

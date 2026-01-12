@@ -77,11 +77,13 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           MainTextField(
+                            prefixIcon: Icon(Icons.phone),
                             label: "Phone Number",
                             controller: authConsumer.phoneController,
                             validator: authConsumer.validatePhone,
                           ),
                           MainTextField(
+                            prefixIcon: Icon(Icons.lock),
                             label: "Password",
                             controller: authConsumer.passwordController,
                             validator: authConsumer.validatePassword,

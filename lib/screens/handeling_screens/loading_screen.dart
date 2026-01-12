@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_wallet_frontend/helpers/consts.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -10,6 +11,8 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center( child:  CircularProgressIndicator(),);
+    return Center( child:  CircularProgressIndicator(
+      color: primaryColor,
+    ),);
   }
 }

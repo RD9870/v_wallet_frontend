@@ -37,6 +37,7 @@ class MainTextField extends StatelessWidget {
               child: Row(children: [Text(label, style: labelSmall)]),
             ),
           TextFormField(
+            
             obscureText: hidePassword != null ? hidePassword! :false,
             validator: validator,
             controller: controller,
@@ -44,7 +45,7 @@ class MainTextField extends StatelessWidget {
             decoration: InputDecoration(
               suffixIcon: suffixIcon != null ? suffixIcon! : IconButton(onPressed: iconTap, icon: hidePassword == true? Icon(Icons.remove_red_eye_outlined): hidePassword == false? Icon(Icons.visibility_off) : SizedBox()),
               
-              // prefixIcon: prefixIcon,
+              prefixIcon: prefixIcon ?? prefixIcon! ,
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: grayColor),
                 borderRadius: BorderRadius.circular(16),

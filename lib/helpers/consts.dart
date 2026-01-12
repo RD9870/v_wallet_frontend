@@ -23,15 +23,12 @@ Duration animationDuration = Duration(milliseconds: 300);
 
 TextStyle displaySmall = GoogleFonts.cairo(
   fontSize: 20,
-  fontWeight: FontWeight.bold,
 );
 TextStyle displayMedium = GoogleFonts.cairo(
   fontSize: 24,
-  fontWeight: FontWeight.bold,
 );
 TextStyle displayLarge = GoogleFonts.cairo(
   fontSize: 28,
-  fontWeight: FontWeight.bold,
 );
 
 TextStyle labelSmall = GoogleFonts.cairo(
