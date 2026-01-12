@@ -40,6 +40,9 @@ dependencies:
   provider:
   toastification:
   http:
+  connectivity_plus:
+  internet_connection_checker_plus:
+  
 
 dev_dependencies:
   flutter_test:

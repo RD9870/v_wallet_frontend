@@ -7,6 +7,7 @@ import 'package:v_wallet_frontend/screens/handeling_screens/loading_screen.dart'
 import 'package:v_wallet_frontend/screens/handeling_screens/network_error_page.dart';
 import 'package:v_wallet_frontend/screens/main_screens/home_screen.dart';
 import 'package:toastification/toastification.dart';
+import 'package:v_wallet_frontend/services/connectivity_services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,8 +52,15 @@ class _ScreenRouterState extends State<ScreenRouter> {
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
       builder: (context, authConsumer, _) {
-        return authConsumer.status == AuthStatus.authenticated
-            ? NetworkErrorPage()//ConfirmationPage(message: "DONE",)//HomeScreen()
+        return 
+        authConsumer.hasInternet == false? NetworkErrorPage(onClick:(){
+              Provider.of<AuthProvider>(
+                    context,
+                    listen: false,
+                  ).initAuthProvider();
+        } ,):
+        authConsumer.status == AuthStatus.authenticated
+            ? HomeScreen()
             : authConsumer.status == AuthStatus.unauthenticated
             ? IntroScreen()
             : authConsumer.status == AuthStatus.authenticating

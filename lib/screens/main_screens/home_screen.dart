@@ -18,12 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<AuthProvider>(builder: (context, authConsumer, _) {
       return Scaffold(
           appBar: AppBar(
-            actions: [IconButton(
+            leading: IconButton(onPressed: (){}, icon: Icon(Icons.qr_code)),
+            actions: [
+              IconButton(
               icon: Icon(Icons.logout), onPressed:authConsumer.busy? null:  () async {
               final response = await authConsumer.logout();
-debugPrint("out of toast: $response");
               if (context.mounted) {
-                debugPrint("in toast: $response");
                           toastification.show(
                             type: response.first
                                 ? ToastificationType.success
@@ -33,11 +33,7 @@ debugPrint("out of toast: $response");
                             autoCloseDuration: const Duration(seconds: 5),
                           );
                         }
-                        debugPrint("response.first && context.mounted: ${response.first && context.mounted}");
-                        debugPrint("response.first: $response.first");
-                        debugPrint("context.mounted: $context.mounted");
                         if (response.first && context.mounted) {
-                          debugPrint("in navigation: $response");
                           Navigator.pushReplacement(
                             context,
                             CupertinoPageRoute(

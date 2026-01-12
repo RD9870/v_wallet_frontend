@@ -4,7 +4,8 @@ import 'package:v_wallet_frontend/widgets/clickables/main_button.dart';
 import 'package:v_wallet_frontend/widgets/statics/message_data_text.dart';
 
 class NetworkErrorPage extends StatelessWidget {
-  const NetworkErrorPage({super.key});
+  final VoidCallback onClick;
+  const NetworkErrorPage({super.key, required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,9 @@ class NetworkErrorPage extends StatelessWidget {
          MessageDataText(mainText: "Something went wrong", subText: "please check your network connection and try again", isDisplay: true,)
          ),
 
-         MainButton(backgroundColor: primaryColor, label: "Try Again", onTap: (onTap){})
+         MainButton(backgroundColor: primaryColor, label: "Try Again", onTap: (){
+          onClick();
+         })
         ],
       ),
     );

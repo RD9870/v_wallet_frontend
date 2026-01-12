@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:v_wallet_frontend/providers/base_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:v_wallet_frontend/services/connectivity_services.dart';
 
 enum AuthStatus {
   uninitialized,
@@ -22,12 +23,16 @@ class AuthProvider extends BaseProvider {
   bool hidePassword = true;
   bool hideConfirmPassword = true;
   final  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool? hasInternet;
 
 
 
 
   Future<void> initAuthProvider() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        hasInternet = await ConnectivityServices.hasNetwork();
+        debugPrint("hasInternet: $hasInternet");
 
     String? tempToken= prefs.getString("token");
 
