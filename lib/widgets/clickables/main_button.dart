@@ -8,35 +8,41 @@ class MainButton extends StatelessWidget {
   final Function onTap;
   final bool isBusy;
 
-
-
-  const MainButton({super.key, required this.backgroundColor, required this.label, this.textColor = whiteColor, required this.onTap, this.isBusy = false});
+  const MainButton({
+    super.key,
+    required this.backgroundColor,
+    required this.label,
+    this.textColor = whiteColor,
+    required this.onTap,
+    this.isBusy = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ElevatedButton(
-           onPressed: () {
+        onPressed: () {
           if (isBusy) {
             return;
           }
           onTap();
         },
         style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50), 
+          minimumSize: const Size(double.infinity, 50),
           padding: EdgeInsets.all(16),
-          elevation: 10.0, 
+          elevation: 10.0,
           backgroundColor: backgroundColor,
           foregroundColor: textColor,
-          shape: 
-            RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(16),
-            ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(16),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
-          child: isBusy ? CircularProgressIndicator(color: textColor,) : Text(label, style: labelMedium,),
+          child: isBusy
+              ? CircularProgressIndicator(color: textColor)
+              : Text(label, style: labelMedium),
         ),
       ),
     );

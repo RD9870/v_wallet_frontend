@@ -1,12 +1,14 @@
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
 import 'package:v_wallet_frontend/providers/base_provider.dart';
 
 class TransferHistoryProvider extends BaseProvider {
 
 
-Future<void> handelFiltering(DateTime selectedDate)async {
+//TODO FINISH THESE
+Future<void> handelFiltering(DateTime selectedDate)async {}
 
-}
+Future<void> poplateHistory(DateTime selectedDate) async {}
+
+Future<void> getMoreHistory(DateTime selectedDate) async {}
+
+
 }

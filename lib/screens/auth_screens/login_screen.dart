@@ -37,43 +37,45 @@ class LoginScreen extends StatelessWidget {
                                 bottomRight: Radius.circular(36),
                               ),
                             ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/v_wallet_logo.png",
-                                      height: getSize(context).width * 0.3,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "V-Wallet",
-                                          style: labelExtraLarge.copyWith(
-                                            color: whiteColor,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/v_wallet_logo.png",
+                                        height: getSize(context).width * 0.3,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "V-Wallet",
+                                            style: labelExtraLarge.copyWith(
+                                              color: whiteColor,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          "Instant payment made easier",
-                                          style: labelSmall.copyWith(
-                                            color: whiteColor,
+                                          Text(
+                                            "Instant payment made easier",
+                                            style: labelSmall.copyWith(
+                                              color: whiteColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: getSize(context).width * 0.5,
-                                  child: Text(
-                                    "Log in to your account",
-                                    style: labelExtraLarge.copyWith(
-                                      color: whiteColor,
-                                    ),
-                                    textAlign: TextAlign.start,
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: getSize(context).width * 0.5,
+                                    child: Text(
+                                      "Log in to your account",
+                                      style: labelExtraLarge.copyWith(
+                                        color: whiteColor,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           MainTextField(

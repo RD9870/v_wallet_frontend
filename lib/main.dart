@@ -66,8 +66,7 @@ class _ScreenRouterState extends State<ScreenRouter> {
         } ,):
         authConsumer.status == AuthStatus.authenticated
             ? MainViewScreen()
-            : 
-            authConsumer.status == AuthStatus.unauthenticated
+            : authConsumer.status == AuthStatus.unauthenticated
             ? IntroScreen()
             : authConsumer.status == AuthStatus.authenticating
             ? LoadingScreen()

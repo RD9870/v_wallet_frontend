@@ -5,6 +5,7 @@ class TranfersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO Merge code here
     return Center(child: Text("Transfers Page -> Najah"));
   }
 }

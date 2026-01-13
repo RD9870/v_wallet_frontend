@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ------------------- API CONSTS -------------------
-String baseUrl = "http://10.0.2.2:8000/api"; //"http://127.0.0.1:8000/api";
+String baseUrl =  "http://10.122.109.127:8000/api"; //"http://127.0.0.1:8000/api";  //"http://10.0.2.2:8000/api"; //
 
 // ------------------- COLORS CONSTS -------------------
 
