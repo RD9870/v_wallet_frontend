@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                                       children: [
                                         Text(
                                           "V-Wallet",
-                                          style: extraLargeLabel.copyWith(
+                                          style: labelExtraLarge.copyWith(
                                             color: whiteColor,
                                           ),
                                         ),
@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                                   width: getSize(context).width * 0.5,
                                   child: Text(
                                     "Log in to your account",
-                                    style: extraLargeLabel.copyWith(
+                                    style: labelExtraLarge.copyWith(
                                       color: whiteColor,
                                     ),
                                     textAlign: TextAlign.start,

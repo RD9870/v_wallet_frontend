@@ -12,8 +12,22 @@ const Color secondaryColor = Color(0xff2a255f);
 const Color whiteColor = Color(0xffEAF1FF);
 const Color blackColor = Color(0xff000C23);
 
+const Color recivedIconColor = Color(0xff9E3996);
+const Color recivedIconBackground = Color(0xffCC96C7); //40 alpha
+const Color recivedIconBackgroundShadow = Color(0xffAB1E9F); //13 alpha
+const Color recivedMoneyColor = Color(0xff63F058);
+
+
+const Color transferIconColor = Color(0xffF40C1F);
+const Color transferIconBackground = Color(0xffCC96C7);
+const Color transferIconBackgroundShadow = Color(0xffFF191D); //13 alpha
+const Color transferMoneyColor = Color(0xffCB3B49);
+
+
 const Color redColor = Color(0xffC63E3E);
+const Color orangeColor = Color(0xffBA6A0F);
 const Color greenColor = Color(0xff029802);
+
 
 const Color grayColor = Color.fromARGB(255, 167, 164, 164);
 
@@ -44,7 +58,7 @@ TextStyle labelLarge = GoogleFonts.cairo(
   fontWeight: FontWeight.bold,
 );
 
-TextStyle extraLargeLabel = GoogleFonts.cairo(
+TextStyle labelExtraLarge = GoogleFonts.cairo(
   fontSize: 32,
   fontWeight: FontWeight.bold,
 );

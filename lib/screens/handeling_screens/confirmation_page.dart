@@ -35,7 +35,7 @@ class ConfirmationPage extends StatelessWidget {
                 child: Icon(Icons.check_rounded, color: whiteColor, size: getSize(context).shortestSide * 0.5,),
               ),
             ),
-            Text(message, style: extraLargeLabel,),
+            Text(message, style: labelExtraLarge,),
             MessageDataText(mainText: "Transaction ID", subText: transactionId !=null ? transactionId! :"id"),
             MessageDataText(mainText: "Date", subText: date != null ? date! : "1/1/1",),
             MessageDataText(mainText: "Amount", subText: ammount != null ? "${ammount!} LYD" : "0 LYD",),
