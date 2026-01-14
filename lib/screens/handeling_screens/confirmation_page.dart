@@ -8,14 +8,17 @@ class ConfirmationPage extends StatelessWidget {
   final String message;
   final String? transactionId;
   final String? date;
-  final int? ammount;
-  final int? currentBalance;
+  final String? ammount;
+  final String? currentBalance;
 
-  const ConfirmationPage({super.key, required this.message,
-  this.transactionId,
-  this.date,
-  this.ammount,
-  this.currentBalance,});
+  const ConfirmationPage({
+    super.key,
+    required this.message,
+    this.transactionId,
+    this.date,
+    this.ammount,
+    this.currentBalance,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +33,41 @@ class ConfirmationPage extends StatelessWidget {
                 width: getSize(context).shortestSide * 0.5,
                 decoration: BoxDecoration(
                   color: primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(200))
+                  borderRadius: BorderRadius.all(Radius.circular(200)),
                 ),
-                child: Icon(Icons.check_rounded, color: whiteColor, size: getSize(context).shortestSide * 0.5,),
+                child: Icon(
+                  Icons.check_rounded,
+                  color: whiteColor,
+                  size: getSize(context).shortestSide * 0.5,
+                ),
               ),
             ),
-            Text(message, style: extraLargeLabel,),
-            MessageDataText(mainText: "Transaction ID", subText: transactionId !=null ? transactionId! :"id"),
-            MessageDataText(mainText: "Date", subText: date != null ? date! : "1/1/1",),
-            MessageDataText(mainText: "Amount", subText: ammount != null ? "${ammount!} LYD" : "0 LYD",),
-            MessageDataText(mainText: "Current Balance", subText: currentBalance != null ? "${currentBalance!} LYD" : "0 LYD",),
-            MainButton(backgroundColor: primaryColor, label: "Done", onTap: (){
-              Navigator.pop(context);
-            })
+            Text(message, style: labelExtraLarge),
+            MessageDataText(
+              mainText: "Transaction ID",
+              subText: transactionId != null ? transactionId! : "id",
+            ),
+            MessageDataText(
+              mainText: "Date",
+              subText: date != null ? date! : "1/1/1",
+            ),
+            MessageDataText(
+              mainText: "Amount",
+              subText: ammount != null ? "${ammount!} LYD" : "0 LYD",
+            ),
+            MessageDataText(
+              mainText: "Current Balance",
+              subText: currentBalance != null
+                  ? "${currentBalance!} LYD"
+                  : "0 LYD",
+            ),
+            MainButton(
+              backgroundColor: primaryColor,
+              label: "Done",
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
           ],
         ),
       ),

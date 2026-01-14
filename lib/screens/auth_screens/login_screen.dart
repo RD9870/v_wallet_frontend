@@ -6,7 +6,7 @@ import 'package:v_wallet_frontend/helpers/consts.dart';
 import 'package:v_wallet_frontend/helpers/functions_helper.dart';
 import 'package:v_wallet_frontend/providers/auth_provider.dart';
 import 'package:v_wallet_frontend/screens/auth_screens/register_screen.dart';
-import 'package:v_wallet_frontend/screens/main_screens/home_screen.dart';
+import 'package:v_wallet_frontend/screens/main_screens/main_view_screen.dart';
 import 'package:v_wallet_frontend/widgets/clickables/main_button.dart';
 import 'package:v_wallet_frontend/widgets/inputs/main_text_field.dart';
 
@@ -37,43 +37,45 @@ class LoginScreen extends StatelessWidget {
                                 bottomRight: Radius.circular(36),
                               ),
                             ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/v_wallet_logo.png",
-                                      height: getSize(context).width * 0.3,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "V-Wallet",
-                                          style: extraLargeLabel.copyWith(
-                                            color: whiteColor,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/v_wallet_logo.png",
+                                        height: getSize(context).width * 0.3,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "V-Wallet",
+                                            style: labelExtraLarge.copyWith(
+                                              color: whiteColor,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          "Instant payment made easier",
-                                          style: labelSmall.copyWith(
-                                            color: whiteColor,
+                                          Text(
+                                            "Instant payment made easier",
+                                            style: labelSmall.copyWith(
+                                              color: whiteColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: getSize(context).width * 0.5,
-                                  child: Text(
-                                    "Log in to your account",
-                                    style: extraLargeLabel.copyWith(
-                                      color: whiteColor,
-                                    ),
-                                    textAlign: TextAlign.start,
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: getSize(context).width * 0.5,
+                                    child: Text(
+                                      "Log in to your account",
+                                      style: labelExtraLarge.copyWith(
+                                        color: whiteColor,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           MainTextField(
@@ -120,7 +122,7 @@ class LoginScreen extends StatelessWidget {
                                   Navigator.pushReplacement(
                                     context,
                                     CupertinoPageRoute(
-                                      builder: (context) => HomeScreen(),
+                                      builder: (context) => MainViewScreen(),
                                     ),
                                   );
                                 }

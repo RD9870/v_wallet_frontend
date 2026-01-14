@@ -43,6 +43,8 @@ dependencies:
   connectivity_plus:
   internet_connection_checker_plus:
   flutter_svg:
+  qr_flutter:
+  mobile_scanner:
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +72,8 @@ flutter:
     - assets/icons/home.svg
     - assets/icons/wallet.svg
     - assets/icons/transfer.svg
+    - assets/v_wallet_logo.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
