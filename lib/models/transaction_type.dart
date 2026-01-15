@@ -19,7 +19,6 @@ enum TransactionType {
     prefix: "-",
   );
 
-  // Fields
   final String label;
   final IconData icon;
   final Color iconColor;
@@ -27,7 +26,6 @@ enum TransactionType {
   final Color backgroundColor;
   final String prefix;
 
-  // Constructor
   const TransactionType({
     required this.label,
     required this.icon,
@@ -36,4 +34,12 @@ enum TransactionType {
     required this.backgroundColor,
     required this.prefix,
   });
+
+  static TransactionType getTransactionType(String type) {
+    if (type == 'received') {
+      return TransactionType.received;
+    } else {
+      return TransactionType.transfered;
+    }
+  }
 }

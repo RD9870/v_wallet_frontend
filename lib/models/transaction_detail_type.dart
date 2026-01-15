@@ -3,18 +3,14 @@ import 'package:v_wallet_frontend/helpers/consts.dart';
 
 enum TransactionDetailType {
   received(
-    // label: "Received",
     icon: Icons.south_west,
     iconColor: recivedIconColor,
-    // textColor: recivedMoneyColor,
     backgroundColor: recivedIconBackground,
     prefix: "+",
   ),
   transfered(
-    // label: "Transferred",
     icon: Icons.arrow_outward,
     iconColor: transferIconColor,
-    // textColor: transferMoneyColor,
     backgroundColor: transferIconBackground,
     prefix: "-",
   ),
@@ -26,16 +22,11 @@ enum TransactionDetailType {
     prefix: "+",
   );
 
-  // Fields
-  //
-  // final String label;
-
   final IconData icon;
   final Color iconColor;
   final Color backgroundColor;
   final String prefix;
 
-  // Constructor
   const TransactionDetailType({
     required this.icon,
     required this.iconColor,

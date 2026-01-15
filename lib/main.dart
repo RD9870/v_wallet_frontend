@@ -10,7 +10,6 @@ import 'package:v_wallet_frontend/providers/home_provider.dart';
 import 'package:v_wallet_frontend/providers/qr_provider.dart';
 import 'package:v_wallet_frontend/screens/main_screens/main_view_screen.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -18,23 +17,24 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        //TODO Add providers here
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => QrProvider()),
         ChangeNotifierProvider(create: (_) => TransferHistoryProvider()),
       ],
       child: ToastificationWrapper(
-  child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-        home: const ScreenRouter(),
-      ),),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+          ),
+          home: const ScreenRouter(),
+        ),
+      ),
     );
   }
 }
@@ -57,21 +57,23 @@ class _ScreenRouterState extends State<ScreenRouter> {
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
       builder: (context, authConsumer, _) {
-        return 
-        authConsumer.hasInternet == false? NetworkErrorPage(onClick:(){
-              Provider.of<AuthProvider>(
+        return authConsumer.hasInternet == false
+            ? NetworkErrorPage(
+                onClick: () {
+                  Provider.of<AuthProvider>(
                     context,
                     listen: false,
                   ).initAuthProvider();
-        } ,):
-        authConsumer.status == AuthStatus.authenticated
+                },
+              )
+            : authConsumer.status == AuthStatus.authenticated
             ? MainViewScreen()
             : authConsumer.status == AuthStatus.unauthenticated
             ? IntroScreen()
             : authConsumer.status == AuthStatus.authenticating
             ? LoadingScreen()
             : LoadingScreen();
-        }
+      },
     );
-      }
   }
+}

@@ -11,8 +11,8 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center( child:  CircularProgressIndicator(
-      color: primaryColor,
-    ),);
+    return Scaffold(
+      body: Center(child: CircularProgressIndicator(color: primaryColor)),
+    );
   }
 }

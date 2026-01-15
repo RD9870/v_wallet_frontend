@@ -16,25 +16,29 @@ enum AuthStatus {
 class AuthProvider extends BaseProvider {
   AuthStatus status = AuthStatus.uninitialized;
   String? token;
-  TextEditingController nameController = TextEditingController(text: "test User");
-  TextEditingController phoneController = TextEditingController(text: "0912345678");
-  TextEditingController passwordController = TextEditingController(text: "password");
-  TextEditingController confirmPasswordController = TextEditingController(text: "password");
+  TextEditingController nameController = TextEditingController(
+    text: "test User",
+  );
+  TextEditingController phoneController = TextEditingController(
+    text: "0912345678",
+  );
+  TextEditingController passwordController = TextEditingController(
+    text: "password123",
+  );
+  TextEditingController confirmPasswordController = TextEditingController(
+    text: "password123",
+  );
   bool hidePassword = true;
   bool hideConfirmPassword = true;
-  final  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool? hasInternet;
-
-
-
 
   Future<void> initAuthProvider() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        hasInternet = await ConnectivityServices.hasNetwork();
-        debugPrint("hasInternet: $hasInternet");
+    hasInternet = await ConnectivityServices.hasNetwork();
+    debugPrint("hasInternet: $hasInternet");
 
-    String? tempToken= prefs.getString("token");
+    String? tempToken = prefs.getString("token");
 
     if (tempToken != null) {
       status = AuthStatus.authenticated;
@@ -49,7 +53,7 @@ class AuthProvider extends BaseProvider {
     notifyListeners();
   }
 
- Future<List> register(Map body) async {
+  Future<List> register(Map body) async {
     setBusy(true);
     final response = await api.post("/register", body);
     if (response.statusCode == 201) {
@@ -63,9 +67,6 @@ class AuthProvider extends BaseProvider {
     }
   }
 
-
-
-
   Future<List> login(Map body) async {
     setBusy(true);
     final response = await api.post("/login", body);
@@ -73,6 +74,9 @@ class AuthProvider extends BaseProvider {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       prefs.setString("token", json.decode(response.body)['access_token']);
+
+      token = json.decode(response.body)['access_token'];
+      status = AuthStatus.authenticated;
 
       setFailed(false);
       setBusy(false);
@@ -105,59 +109,55 @@ class AuthProvider extends BaseProvider {
     }
   }
 
+  String? validateName(String? val) {
+    if (val!.isEmpty) {
+      return "Name is Required";
+    }
+    return null;
+  }
 
-String? validateName(String? val){
-  if (val!.isEmpty) {
-  return "Name is Required";
-}
-return null;
-}
+  String? validatePhone(String? val) {
+    if (val!.isEmpty) {
+      return "Phone is Required";
+    }
+    if (val.length != 10) {
+      return "Phone must be 10 digts at least";
+    }
+    return null;
+  }
 
-String? validatePhone (String? val){
-  if (val!.isEmpty) {
-  return "Phone is Required";
-}
-if (val.length != 10) {
-  return "Phone must be 10 digts at least";
-}
-return null;
-}
+  String? validatePassword(String? val) {
+    if (val!.isEmpty) {
+      return "Password is Required";
+    }
+    if (val.length < 8) {
+      return "Password must be at least 10 digts long";
+    }
+    return null;
+  }
 
+  String? validateConfirmPassword(String? val) {
+    if (val!.isEmpty) {
+      return "Password confirmation is Required";
+    }
+    if (val.length < 8) {
+      return "Password must be at least 10 digts long";
+    }
+    if (val != passwordController.text) {
+      return "Password confirmation must match passwrd";
+    }
+    return null;
+  }
 
-String? validatePassword(String? val){
-  if (val!.isEmpty) {
-  return "Password is Required";
-}
-if (val.length < 8) {
-  return "Password must be at least 10 digts long";
-}
-return null;
-}
+  void setHidePassword() {
+    debugPrint("hidePassword =$hidePassword");
+    debugPrint("!hidePassword =${!hidePassword}");
+    hidePassword = !hidePassword;
+    notifyListeners();
+  }
 
-
-String? validateConfirmPassword(String? val){
-  if (val!.isEmpty) {
-  return "Password confirmation is Required";
-}
-if (val.length < 8) {
-  return "Password must be at least 10 digts long";
-}
-if (val != passwordController.text) {
-  return "Password confirmation must match passwrd";
-}
-return null;
-}
-
-
-void setHidePassword(){
-  debugPrint("hidePassword =$hidePassword");
-  debugPrint("!hidePassword =${!hidePassword}");
-  hidePassword = !hidePassword;
-  notifyListeners();
-}
-
-void setHideConfirmPassword(){
-  hideConfirmPassword = !hideConfirmPassword;
-  notifyListeners();
-}
+  void setHideConfirmPassword() {
+    hideConfirmPassword = !hideConfirmPassword;
+    notifyListeners();
+  }
 }

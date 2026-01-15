@@ -8,12 +8,14 @@ import 'package:v_wallet_frontend/screens/auth_screens/login_screen.dart';
 import 'package:v_wallet_frontend/widgets/clickables/main_button.dart';
 import 'package:v_wallet_frontend/widgets/inputs/main_text_field.dart';
 import 'package:toastification/toastification.dart';
+import 'package:v_wallet_frontend/widgets/statics/colored_container.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Consumer<AuthProvider>(
       builder: (context, authConsumer, _) {
         return SafeArea(
@@ -23,57 +25,51 @@ class RegisterScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Form(
-                    key: authConsumer.formKey,
+                    key: formKey,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
-                            height: getSize(context).height * 0.3,
-                            decoration: BoxDecoration(
-                              color: primaryColor.withValues(alpha: 0.7),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(36),
-                                bottomRight: Radius.circular(36),
-                              ),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/v_wallet_logo.png",
-                                      height: getSize(context).width * 0.3,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "V-Wallet",
-                                          style: labelExtraLarge.copyWith(
-                                            color: whiteColor,
+                          ColoredContainer(
+                            kids: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/v_wallet_logo.png",
+                                        height: getSize(context).width * 0.3,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "V-Wallet",
+                                            style: labelExtraLarge.copyWith(
+                                              color: whiteColor,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          "Instant payment made easier",
-                                          style: labelSmall.copyWith(
-                                            color: whiteColor,
+                                          Text(
+                                            "Instant payment made easier",
+                                            style: labelSmall.copyWith(
+                                              color: whiteColor,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: getSize(context).width * 0.5,
-                                  child: Text(
-                                    "Register your account",
-                                    style: labelExtraLarge.copyWith(
-                                      color: whiteColor,
-                                    ),
-                                    textAlign: TextAlign.start,
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
+                                  SizedBox(
+                                    width: getSize(context).width * 0.5,
+                                    child: Text(
+                                      "Register your account",
+                                      style: labelExtraLarge.copyWith(
+                                        color: whiteColor,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                           MainTextField(
                             label: "Full Name",
@@ -108,8 +104,7 @@ class RegisterScreen extends StatelessWidget {
                             backgroundColor: primaryColor,
                             label: "Register",
                             onTap: () async {
-                              if (authConsumer.formKey.currentState!
-                                  .validate()) {
+                              if (formKey.currentState!.validate()) {
                                 final response = await authConsumer.register({
                                   "name": authConsumer.nameController.text,
                                   "phone": authConsumer.phoneController.text,
@@ -125,7 +120,7 @@ class RegisterScreen extends StatelessWidget {
                                       response.first ? "Success" : "Error",
                                     ),
                                     description: Text(response.last),
-                                      autoCloseDuration: const Duration(
+                                    autoCloseDuration: const Duration(
                                       seconds: 5,
                                     ),
                                   );

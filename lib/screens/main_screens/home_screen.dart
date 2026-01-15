@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 import 'package:v_wallet_frontend/helpers/consts.dart';
 import 'package:v_wallet_frontend/helpers/functions_helper.dart';
-import 'package:v_wallet_frontend/models/transaction_type.dart';
 import 'package:v_wallet_frontend/providers/auth_provider.dart';
 import 'package:v_wallet_frontend/providers/home_provider.dart';
+import 'package:v_wallet_frontend/providers/transfer_history_provider.dart';
 import 'package:v_wallet_frontend/screens/auth_screens/login_screen.dart';
 import 'package:v_wallet_frontend/screens/handeling_screens/qr_scanner.dart';
 import 'package:v_wallet_frontend/screens/main_screens/transfer_history.dart';
@@ -23,6 +23,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeProvider>(context, listen: false).getUserInfo();
+      Provider.of<HomeProvider>(context, listen: false).poplateHome();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer2<AuthProvider, HomeProvider>(
       builder: (context, authConsumer, homeConsumer, _) {
@@ -31,103 +40,125 @@ class _HomeScreenState extends State<HomeScreen> {
             body: Column(
               children: [
                 ColoredContainer(
-                  kids: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //TODO QR scanner
-                          IconButton(
-                            onPressed: () async {
-                              final scannedCode = await Navigator.of(context)
-                                  .push(
-                                    MaterialPageRoute(
-                                      builder: (context) => const QrScanner(),
-                                    ),
-                                  );
-                              debugPrint("scannedCode: $scannedCode");
-                            },
-                            icon: Icon(
-                              Icons.qr_code,
-                              color: whiteColor,
-                              size: getSize(context).width * 0.1,
+                  kids: homeConsumer.busy
+                      ? [
+                          SizedBox(
+                            height: getSize(context).height * 0.3,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: whiteColor,
+                              ),
                             ),
                           ),
-
-                          IconButton(
-                            icon: Icon(
-                              Icons.logout,
-                              color: whiteColor,
-                              size: getSize(context).width * 0.1,
-                            ),
-                            onPressed: authConsumer.busy
-                                ? null
-                                : () async {
-                                    final response = await authConsumer
-                                        .logout();
-                                    if (context.mounted) {
-                                      toastification.show(
-                                        type: response.first
-                                            ? ToastificationType.success
-                                            : ToastificationType.error,
-                                        title: Text(
-                                          response.first ? "Success" : "Error",
-                                        ),
-                                        description: Text(response.last),
-                                        autoCloseDuration: const Duration(
-                                          seconds: 5,
-                                        ),
-                                      );
-                                    }
-                                    if (response.first && context.mounted) {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        CupertinoPageRoute(
-                                          builder: (context) => LoginScreen(),
-                                        ),
-                                      );
-                                    }
+                        ]
+                      : [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  onPressed: () async {
+                                    final scannedCode =
+                                        await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const QrScanner(),
+                                          ),
+                                        );
+                                    debugPrint("scannedCode: $scannedCode");
                                   },
+                                  icon: Icon(
+                                    Icons.qr_code,
+                                    color: whiteColor,
+                                    size: getSize(context).width * 0.1,
+                                  ),
+                                ),
+
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.logout,
+                                    color: whiteColor,
+                                    size: getSize(context).width * 0.1,
+                                  ),
+                                  onPressed: authConsumer.busy
+                                      ? null
+                                      : () async {
+                                          final response = await authConsumer
+                                              .logout();
+                                          if (context.mounted) {
+                                            toastification.show(
+                                              type: response.first
+                                                  ? ToastificationType.success
+                                                  : ToastificationType.error,
+                                              title: Text(
+                                                response.first
+                                                    ? "Success"
+                                                    : "Error",
+                                              ),
+                                              description: Text(response.last),
+                                              autoCloseDuration: const Duration(
+                                                seconds: 5,
+                                              ),
+                                            );
+                                          }
+                                          if (response.first &&
+                                              context.mounted) {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              CupertinoPageRoute(
+                                                builder: (context) =>
+                                                    LoginScreen(),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.account_circle_outlined,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.account_circle_outlined,
+                                  color: whiteColor,
+                                  size: getSize(context).width * 0.2,
+                                ),
+                                Text(
+                                  "Hello, ${homeConsumer.username}",
+                                  style: labelLarge.copyWith(color: whiteColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                          MessageDataText(
+                            mainText: "Current Balance",
+                            subText: "${homeConsumer.userBalance} LYD",
                             color: whiteColor,
-                            size: getSize(context).width * 0.2,
-                          ),
-                          Text(
-                            "Hello, username",
-                            style: labelLarge.copyWith(color: whiteColor),
                           ),
                         ],
-                      ),
-                    ),
-                    MessageDataText(
-                      mainText: "Current Balance",
-                      subText: "00000 LYD",
-                      color: whiteColor,
-                    ),
-                  ],
                 ),
 
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 6,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TransactionTile(
-                        amount: 333,
-                        date: "13 Dec 1969",
-                        type: TransactionType.received,
-                      );
-                    },
-                  ),
+                  child: homeConsumer.busy
+                      ? const Center(
+                          child: CircularProgressIndicator(color: primaryColor),
+                        )
+                      : homeConsumer.noData
+                      ? const Center(child: Text("No transactions yet"))
+                      : ListView.builder(
+                          itemCount: homeConsumer.homeScreen.length,
+                          itemBuilder: (context, index) {
+                            final transfer = homeConsumer.homeScreen[index];
+                            return TransactionTile(
+                              amount: transfer.amount,
+                              date: transfer.date,
+                              type: transfer.transactionType,
+                            );
+                          },
+                        ),
                 ),
 
                 TextButton(

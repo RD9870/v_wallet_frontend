@@ -7,25 +7,29 @@ class MessageDataText extends StatelessWidget {
   final bool? isDisplay;
   final Color? color;
 
-  const MessageDataText({super.key, required this.mainText, required this.subText, this.isDisplay, this.color});
+  const MessageDataText({
+    super.key,
+    required this.mainText,
+    required this.subText,
+    this.isDisplay,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
-      // final mainStyle = isDisplay == true ? displayLarge : labelExtraLarge;
-      TextAlign? aligment = isDisplay == true? TextAlign.center: null;
-      TextStyle mainStyle = isDisplay == true ? displayLarge : labelExtraLarge;
-      TextStyle subStyle = isDisplay == true ? displaySmall : labelLarge;
+    TextAlign? aligment = isDisplay == true ? TextAlign.center : null;
+    TextStyle mainStyle = isDisplay == true ? displayLarge : labelExtraLarge;
+    TextStyle subStyle = isDisplay == true ? displaySmall : labelLarge;
 
-      if(color !=null){
-        mainStyle = mainStyle.copyWith(color: color);
-        subStyle = subStyle.copyWith(color: color);
-      }
+    if (color != null) {
+      mainStyle = mainStyle.copyWith(color: color);
+      subStyle = subStyle.copyWith(color: color);
+    }
 
     return Column(
-      children: 
-      [
-        Text(mainText, style:mainStyle, textAlign: aligment,),
-        Text(subText, style: subStyle, textAlign: aligment)
+      children: [
+        Text(mainText, style: mainStyle, textAlign: aligment),
+        Text(subText, style: subStyle, textAlign: aligment),
       ],
     );
   }
