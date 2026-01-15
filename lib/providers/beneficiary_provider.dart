@@ -11,8 +11,6 @@ class BeneficiaryProvider extends BaseProvider {
 
   bool isValidating = false;
 
-  // bool isLoadings = false;
-
   Future<void> navigateToTransfer(String phone) async {
     cleanPhone = phone.trim();
     debugPrint("Clean Phone: $cleanPhone");
@@ -20,27 +18,13 @@ class BeneficiaryProvider extends BaseProvider {
 
     if (cleanPhone.isEmpty) {
       errorMessage = "Please enter a phone number";
-      notifyListeners();
+    } else {
+      setisValidating(true);
+      errorMessage = await verifyReceiver(cleanPhone);
+      setisValidating(false);
     }
 
-    setisValidating(true);
-    errorMessage = await verifyReceiver(cleanPhone);
-    setisValidating(false);
-
     notifyListeners();
-    // if (errorMessage != null) {
-    // return errorMessage;
-    // }
-
-    // if () return;
-    // setisValidating(false);
-
-    // if (errorMessage == null) {
-    //   return null;
-    // } else {
-
-    //   );
-    // }
   }
 
   void setisValidating(bool value) {
@@ -65,7 +49,6 @@ class BeneficiaryProvider extends BaseProvider {
   }
 
   Future<void> fetchBeneficiaries() async {
-    // isLoadings = true;
     setBusy(true);
     notifyListeners();
     try {

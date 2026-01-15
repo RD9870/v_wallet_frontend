@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:v_wallet_frontend/screens/transfer/transfer_amount_screen.dart';
+import 'package:v_wallet_frontend/widgets/dialogs/show_add_popup.dart';
 import '../../providers/beneficiary_provider.dart';
 import '../../widgets/transfer/add_beneficiary.dart';
 import '../../widgets/transfer/beneficiary_card.dart';
@@ -57,7 +58,6 @@ class BeneficiariesScreenState extends State<BeneficiariesScreen> {
                     onSubmitted: (value) async {
                       await provider.navigateToTransfer(value);
                       debugPrint("onSubmitted Error: ${provider.errorMessage}");
-                      // if (!context.mounted) return;
 
                       if (provider.errorMessage != null && context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -82,7 +82,6 @@ class BeneficiariesScreenState extends State<BeneficiariesScreen> {
                         );
                       }
                     },
-                    //provider.navigateToTransfer(value),
                     decoration: InputDecoration(
                       hintText: "Enter phone number",
                       hintStyle: const TextStyle(color: Colors.grey),
@@ -112,7 +111,6 @@ class BeneficiariesScreenState extends State<BeneficiariesScreen> {
                                 debugPrint(
                                   "onSubmitted Error: ${provider.errorMessage}",
                                 );
-                                // if (!context.mounted) return;
 
                                 if (provider.errorMessage != null &&
                                     context.mounted) {
@@ -173,7 +171,10 @@ class BeneficiariesScreenState extends State<BeneficiariesScreen> {
                           size: 30,
                           color: Colors.black,
                         ),
-                        onPressed: () => showAddPopup(context),
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => ShowAddPopup(),
+                        ),
                       ),
                     ],
                   ),
@@ -196,7 +197,6 @@ class BeneficiariesScreenState extends State<BeneficiariesScreen> {
                                   debugPrint(
                                     "onSubmitted Error: ${provider.errorMessage}",
                                   );
-                                  // if (!context.mounted) return;
 
                                   if (provider.errorMessage != null &&
                                       context.mounted) {
@@ -238,33 +238,6 @@ class BeneficiariesScreenState extends State<BeneficiariesScreen> {
           ),
         );
       },
-    );
-  }
-
-  void showAddPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AddBeneficiaryPopup(
-        onAdd: (phone) async {
-          final provider = context.read<BeneficiaryProvider>();
-          final bool success = await provider.addBeneficiary(phone);
-
-          if (!mounted) return;
-
-          if (success) {
-            if (dialogContext.mounted) Navigator.of(dialogContext).pop();
-          } else {
-            if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("User not found"),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          }
-        },
-      ),
     );
   }
 }
