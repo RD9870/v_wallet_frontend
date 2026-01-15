@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:v_wallet_frontend/providers/qr_transfer_provider.dart';
 
 class GenerateQrScreen extends StatefulWidget {
   const GenerateQrScreen({super.key});
 
   @override
-  State<GenerateQrScreen> createState() => _GenerateQrScreenState();
+  State<GenerateQrScreen> createState() => GenerateQrScreenState();
 }
 
-class _GenerateQrScreenState extends State<GenerateQrScreen> {
-  final TextEditingController _amountController = TextEditingController(
-    text: "200",
+class GenerateQrScreenState extends State<GenerateQrScreen> {
+  final TextEditingController amountController = TextEditingController(
+    text: "0",
   );
   final List<String> quickAmounts = [
     "10",
@@ -45,7 +44,6 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 30),
-                // صندوق الإدخال
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
@@ -65,7 +63,7 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
                         children: [
                           Expanded(
                             child: TextField(
-                              controller: _amountController,
+                              controller: amountController,
                               style: const TextStyle(
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
@@ -99,9 +97,8 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
                               (amt) => ActionChip(
                                 label: Text("$amt LYD"),
                                 backgroundColor: const Color(0xFFFFDADA),
-                                onPressed: () => setState(
-                                  () => _amountController.text = amt,
-                                ),
+                                onPressed: () =>
+                                    setState(() => amountController.text = amt),
                               ),
                             )
                             .toList(),
@@ -122,14 +119,42 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
                       ),
                     ),
                     onPressed: () async {
-                      await provider.generateQr(
-                        _amountController.text,
-                        context,
+                      final bool? confirmed = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: const Text("confirm QR Code Generation"),
+                          content: Text(
+                            "Are you sure you want to generate a QR code for ${amountController.text}?",
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx, false),
+                              child: const Text("cancel"),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => Navigator.pop(ctx, true),
+                              child: const Text("confirm"),
+                            ),
+                          ],
+                        ),
                       );
-                      if (provider.generatedQrData != null) {
-                        _showQrResult(context, provider.generatedQrData!);
+                      if (confirmed != true) return;
+                      if (context.mounted) {
+                        await provider.generateQr(
+                          amountController.text,
+                          context,
+                        );
+
+                        if (provider.generatedQrData != null &&
+                            context.mounted) {
+                          provider.showQrResult(
+                            context,
+                            provider.generatedQrData!,
+                          );
+                        }
                       }
                     },
+
                     child: const Text(
                       "Generate QR Code",
                       style: TextStyle(color: Colors.white, fontSize: 18),
@@ -139,36 +164,6 @@ class _GenerateQrScreenState extends State<GenerateQrScreen> {
             ),
           );
         },
-      ),
-    );
-  }
-
-  void _showQrResult(BuildContext context, String qrData) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.7,
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            const Text(
-              "Let The Other Party\nScan the Code",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 40),
-            QrImageView(data: qrData, version: QrVersions.auto, size: 250),
-            const SizedBox(height: 20),
-            const Text(
-              "12-34-56-789",
-              style: TextStyle(fontSize: 18, color: Colors.grey),
-            ),
-          ],
-        ),
       ),
     );
   }
