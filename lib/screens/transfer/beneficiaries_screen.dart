@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:v_wallet_frontend/screens/transfer/transfer_amount_screen.dart';
 import 'package:v_wallet_frontend/widgets/dialogs/show_add_popup.dart';
 import '../../providers/beneficiary_provider.dart';
-import '../../widgets/transfer/add_beneficiary.dart';
 import '../../widgets/transfer/beneficiary_card.dart';
 
 class BeneficiariesScreen extends StatefulWidget {
