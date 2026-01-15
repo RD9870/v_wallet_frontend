@@ -85,5 +85,3 @@ class TransactionDetailPopUp extends StatelessWidget {
     );
   }
 }
-
-//status date & time  bank    Account      From          To

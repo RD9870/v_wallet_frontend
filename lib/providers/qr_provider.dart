@@ -9,8 +9,6 @@ class QrProvider extends BaseProvider {
   bool hasScanned = false;
   List<String> qrs = [];
 
-  // Future<void> showQrScanner() async {}
-
   void onQRViewCreated(QRViewController controller, BuildContext context) {
     hasScanned = false;
     controller.scannedDataStream.listen((scanData) async {
@@ -19,7 +17,7 @@ class QrProvider extends BaseProvider {
       hasScanned = true;
       await controller.pauseCamera();
       if (context.mounted) {
-        Navigator.pop(context, scanData.code); // Exit the scanner screen
+        Navigator.pop(context, scanData.code);
       }
       debugPrint("qr: $qrValue");
       notifyListeners();

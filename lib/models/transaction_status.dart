@@ -6,13 +6,10 @@ enum TransactionStatus {
 
   pending(label: "Pending", textColor: orangeColor),
 
-  failed(label: "Failed", textColor: redColor);
+  expired(label: "Expired", textColor: redColor);
 
-  // Fields
-  //
   final String label;
   final Color textColor;
 
-  // Constructor
   const TransactionStatus({required this.label, required this.textColor});
 }

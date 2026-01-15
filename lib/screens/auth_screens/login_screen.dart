@@ -9,12 +9,14 @@ import 'package:v_wallet_frontend/screens/auth_screens/register_screen.dart';
 import 'package:v_wallet_frontend/screens/main_screens/main_view_screen.dart';
 import 'package:v_wallet_frontend/widgets/clickables/main_button.dart';
 import 'package:v_wallet_frontend/widgets/inputs/main_text_field.dart';
+import 'package:v_wallet_frontend/widgets/statics/colored_container.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Consumer<AuthProvider>(
       builder: (context, authConsumer, _) {
         return SafeArea(
@@ -24,21 +26,13 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Form(
-                    key: authConsumer.formKey,
+                    key: formKey,
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
-                            height: getSize(context).height * 0.3,
-                            decoration: BoxDecoration(
-                              color: primaryColor.withValues(alpha: 0.7),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(36),
-                                bottomRight: Radius.circular(36),
-                              ),
-                            ),
-                            child: SingleChildScrollView(
-                              child: Column(
+                          ColoredContainer(
+                            kids: [
+                              Column(
                                 children: [
                                   Row(
                                     children: [
@@ -76,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
                           MainTextField(
                             prefixIcon: Icon(Icons.phone),
@@ -97,8 +91,7 @@ class LoginScreen extends StatelessWidget {
                             backgroundColor: primaryColor,
                             label: "Login",
                             onTap: () async {
-                              if (authConsumer.formKey.currentState!
-                                  .validate()) {
+                              if (formKey.currentState!.validate()) {
                                 final response = await authConsumer.login({
                                   "phone": authConsumer.phoneController.text,
                                   "password":
