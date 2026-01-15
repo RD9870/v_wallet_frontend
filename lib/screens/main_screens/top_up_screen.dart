@@ -17,9 +17,6 @@ class TopUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return Center(child: Text("Top Up Page -> Noran"));
-=======
     return Scaffold(
       appBar: AppBar(title: const Text("Top UP")),
       body: Padding(
@@ -56,6 +53,5 @@ class TopUpScreen extends StatelessWidget {
         ),
       ),
     );
->>>>>>> origin/noran
   }
 }
