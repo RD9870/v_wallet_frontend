@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:v_wallet_frontend/models/transfer_model.dart';
 import 'package:v_wallet_frontend/providers/base_provider.dart';

@@ -6,7 +6,6 @@ import 'package:v_wallet_frontend/helpers/consts.dart';
 import 'package:v_wallet_frontend/helpers/functions_helper.dart';
 import 'package:v_wallet_frontend/providers/auth_provider.dart';
 import 'package:v_wallet_frontend/providers/home_provider.dart';
-import 'package:v_wallet_frontend/providers/transfer_history_provider.dart';
 import 'package:v_wallet_frontend/screens/auth_screens/login_screen.dart';
 import 'package:v_wallet_frontend/screens/main_screens/transfer_history.dart';
 import 'package:v_wallet_frontend/screens/transfer/scan_qr_screen.dart';
